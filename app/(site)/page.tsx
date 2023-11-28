@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { currentUser } from '@clerk/nextjs';
 import Image from 'next/image';
 
@@ -25,6 +26,8 @@ type URLProps = {
 
 export default async function Home({ searchParams }: URLProps) {
   const user = await currentUser();
+  if (!user) return redirect('/sign-in');
+
   const page = searchParams.page ? +searchParams.page : 1;
   const { posts, totalPages } = await getAllPosts(
     searchParams.sort,
