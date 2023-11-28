@@ -5,7 +5,7 @@ import {
   currentUser as getCurrentUser,
 } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import prisma from '@/prisma';
 import {
@@ -46,7 +46,7 @@ export async function getAllPosts(
     });
 
     return {
-      posts,
+      posts: posts ?? [],
       totalPages,
     };
   } catch (error) {
@@ -57,7 +57,7 @@ export async function getAllPosts(
 export async function createPost({ postData }: { postData: CreatePostType }) {
   try {
     const session = await getCurrentUser();
-    if (!session) return redirectToSignIn();
+    if (!session) return redirect('/sign-in');
 
     const parsedData = PostSchema.safeParse(postData);
     if (!parsedData.success) throw new Error(parsedData.error.message);
@@ -362,7 +362,7 @@ export async function getRelatedPosts(authorName: string, title: string) {
 export async function reportPost(id: string, reasons: string[]) {
   try {
     const currentUser = await getCurrentUser();
-    if (!currentUser) return redirectToSignIn();
+    if (!currentUser) return redirect('/sign-in');
 
     await prisma.report.create({
       data: {
