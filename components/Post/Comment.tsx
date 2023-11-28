@@ -3,8 +3,8 @@
 import { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { useUser } from '@clerk/nextjs';
-import { Comment as PostComments } from '@prisma/client';
 import { notFound } from 'next/navigation';
+import { Comment as PostComments } from '@/prisma/generated/client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { CommentInput } from '@/components/index';
@@ -212,6 +212,8 @@ const Comment = ({
           authorImage={reply.authorImage}
           createdAt={createdAt}
           updateAt={updateAt}
+          parentId={reply.parentId}
+          type={'subComment'}
         />
       ))}
     </div>
