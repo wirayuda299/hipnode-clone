@@ -1,9 +1,6 @@
 'use server';
 
-import {
-  redirectToSignIn,
-  currentUser as getCurrentUser,
-} from '@clerk/nextjs/server';
+import { currentUser as getCurrentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { notFound, redirect } from 'next/navigation';
 
