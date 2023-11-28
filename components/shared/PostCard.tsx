@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Comment } from '@prisma/client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { IsLiked } from '../Home/IsLiked';
+import { Comment } from '@/prisma/generated/client';
 
 type User = {
   username: string;
