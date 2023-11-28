@@ -1,5 +1,4 @@
 import { Post } from '@/types/home';
-
 export const postDummyData: Post[] = [
   {
     id: 1,
