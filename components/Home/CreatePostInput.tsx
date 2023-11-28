@@ -10,19 +10,11 @@ import { filterWords, formUrlQuery } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { toast } from '../ui/use-toast';
-import type { User } from '@clerk/nextjs/server';
 
-type CreatePostInputProps = {
-  imageUrl: string;
-  username: string;
-};
-
-export default function CreatePostInput({
-  imageUrl,
-  username,
-}: CreatePostInputProps) {
+export default function CreatePostInput() {
   const params = useSearchParams();
   const router = useRouter();
+  const user = useUser();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,13 +38,13 @@ export default function CreatePostInput({
     <form className='barContainer' onSubmit={onSubmit}>
       <Avatar>
         <Image
-          src={imageUrl}
+          src={user?.user?.imageUrl ?? ''}
           width={50}
           height={50}
           className='w-16 !rounded-full'
-          alt={username}
+          alt={user?.user?.username ?? ''}
         />
-        <AvatarFallback>{username}</AvatarFallback>
+        <AvatarFallback>{user?.user?.username ?? ''}</AvatarFallback>
       </Avatar>
       <Input
         name='title'

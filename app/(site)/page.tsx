@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation';
-import { currentUser } from '@clerk/nextjs';
 import Image from 'next/image';
 
 import { popularTags, pinnedGroups, newAndPopular } from '@/constant';
@@ -25,9 +23,6 @@ type URLProps = {
 };
 
 export default async function Home({ searchParams }: URLProps) {
-  const user = await currentUser();
-  if (!user) return redirect('/sign-in');
-
   const page = searchParams.page ? +searchParams.page : 1;
   const { posts, totalPages } = await getAllPosts(
     searchParams.sort,
@@ -129,16 +124,13 @@ export default async function Home({ searchParams }: URLProps) {
       <section className='w-max'>
         <div className='homeMain no-scrollbar'>
           <SortMobile />
-          <CreatePostInput
-            username={user?.username as string}
-            imageUrl={user?.imageUrl as string}
-          />
+          <CreatePostInput />
           <section className='mb-10'>
             <div className='pb-2'>
               {searchResults?.map((post) => (
                 <PostCard
-                  emailAddress={user?.emailAddresses[0].emailAddress as string}
-                  username={user?.username as string}
+                  emailAddress={post.authorEmail}
+                  username={post?.authorName}
                   key={post.id}
                   id={post.id}
                   authorName={post.authorName}
