@@ -103,6 +103,8 @@ const PostArticle = ({
       <div className='mb-3 rounded-b-2xl bg-white dark:bg-darkPrimary-3 max-lg:rounded-2xl md:-mt-8'>
         {comments?.map((comment) => (
           <Comment
+            parentId={comment.parentId}
+            type='comment'
             key={comment.comment}
             postId={id}
             isSubComment={false}
